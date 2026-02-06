@@ -20,7 +20,7 @@ const Navbar = () => {
           </div>
 
           {/* RIGHT: Menu */}
-          <div className="flex items-center space-x-4">
+          <div className="flex items-center space-x-4 text-base">
             <Link to="/" className="text-blue-700 hover:text-black">Home</Link>
             <Link to="/about" className="text-blue-700 hover:text-black">Services</Link>
             <Link to="/about" className="text-blue-700 hover:text-black">Doctors</Link>

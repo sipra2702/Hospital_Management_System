@@ -20,6 +20,8 @@ const authRoutes = require('./route/authRoutes');
 // Mount Routes
 app.use('/api/auth', authRoutes);
 
+
+
 app.get('/', (req, res) => {
   res.send('API is running...');
 });
