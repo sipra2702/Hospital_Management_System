@@ -13,13 +13,14 @@ const Home = () => {
         Efficient • Secure • Smart Healthcare Solutions
       </p>
 
-     <img className='h-106' src="https://www.shutterstock.com/image-photo/portrait-handsome-male-doctor-stethoscope-600nw-2480850611.jpg" alt="" /> 
-     <section className="flex flex-colmd:flex-row items-center px-10 py-10">
+      <img className='h-106' src="https://www.shutterstock.com/image-photo/portrait-handsome-male-doctor-stethoscope-600nw-2480850611.jpg" alt="" />
+
       <div className="md:w-1/2 space-y-6">
-        <h2 className="text-4xl font-bold text-gray-900">Caring for life <br/> Trusted Healthcare </h2>
-    
+        <h2 className="text-4xl font-bold text-gray-900">Caring for life <br /> Trusted Healthcare </h2>
+
+      </div>
     </div>
-    
+
   );
 };
 
