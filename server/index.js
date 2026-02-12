@@ -16,6 +16,7 @@ app.use(express.json());
 
 // Routes
 const authRoutes = require('./route/authRoutes');
+const authRoutes = require('./route/authRoutes');
 
 // Mount Routes
 app.use('/api/auth', authRoutes);

@@ -7,7 +7,10 @@ import AdminLayout from './layouts/AdminLayout';
 
 // Pages
 import Home from './pages/public/Home';
+import Services from './pages/public/Services';
 import About from './pages/public/About';
+import Doctor from './pages/public/Doctor'
+import Contact from './pages/public/Contact'
 import Login from './pages/public/Login';
 import Register from './pages/public/Register';
 import Profile from './pages/user/Profile';
@@ -23,7 +26,11 @@ function App() {
       {/* Public Routes with Main Layout */}
       <Route path="/" element={<MainLayout />}>
         <Route index element={<Home />} />
-        <Route path="about" element={<About />} />
+        <Route path="Services" element={<Services/>} />
+         <Route path="About" element={<About/>} />
+          <Route path="Doctor" element={<Doctor/>} />
+          <Route path="Contact" element={<Contact/>} />
+          
         
         {/* Only accessible if NOT logged in */}
         <Route 
