@@ -12,34 +12,16 @@ const Home = () => {
       <p className="text-xl text-gray-600 mb-8 max-w-2xl mx-auto">
         Efficient • Secure • Smart Healthcare Solutions
       </p>
-      
-      <div className="space-x-4">
-        {user ? (
-          <Link 
-            to="/https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSmOT5Fy0Sl6hBbJS5RdLUsZOQrnxFk_LH1cw&s" 
-            className="bg-blue-600 text-white px-8 py-3 rounded-lg font-semibold hover:bg-blue-700 transition"
-          >
-            Go to Dashboard
-          </Link>
-        ) : (
-          <>
-            <Link 
-              to="/register" 
-              className="bg-blue-600 text-white px-8 py-3 rounded-lg font-semibold hover:bg-blue-700 transition"
-            >
-              Get Started
-            </Link>
-            <Link 
-              to="/login" 
-              className="bg-white text-blue-600 border border-blue-600 px-8 py-3 rounded-lg font-semibold hover:bg-gray-50 transition"
-            >
-              Login
-            </Link>
-          </>
-        )}
+
+      <img className='h-106' src="https://www.shutterstock.com/image-photo/portrait-handsome-male-doctor-stethoscope-600nw-2480850611.jpg" alt="" />
+
+      <div className="md:w-1/2 space-y-6">
+        <h2 className="text-4xl font-bold text-gray-900">Caring for life <br /> Trusted Healthcare </h2>
+
       </div>
     </div>
-  );
+
+  );  
 };
 
 export default Home;

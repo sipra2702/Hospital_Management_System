@@ -19,6 +19,8 @@ import AdminDashboard from './pages/admin/AdminDashboard';
 // Route Guards
 import ProtectedRoute from './route/ProtectedRoute';
 import PublicRoute from './route/PublicRoute';
+import Cardiology from "./pages/public/Cardiology";
+
 
 function App() {
   return (
@@ -26,11 +28,17 @@ function App() {
       {/* Public Routes with Main Layout */}
       <Route path="/" element={<MainLayout />}>
         <Route index element={<Home />} />
-        <Route path="Services" element={<Services/>} />
-         <Route path="About" element={<About/>} />
-          <Route path="Doctor" element={<Doctor/>} />
-          <Route path="Contact" element={<Contact/>} />
+
+        <Route path="services" element={<Services/>} />
+         <Route path="about" element={<About/>} />
+          <Route path="doctor" element={<Doctor/>} />
+          <Route path="contact" element={<Contact/>} />
           
+
+        
+        <Route path="/departments/cardiology" element={<Cardiology />} />
+       
+
         
         {/* Only accessible if NOT logged in */}
         <Route 
