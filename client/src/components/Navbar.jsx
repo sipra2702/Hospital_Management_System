@@ -22,9 +22,10 @@ const Navbar = () => {
           {/* RIGHT: Menu */}
           <div className="flex items-center space-x-4 text-base">
             <Link to="/" className="text-blue-700 hover:text-black">Home</Link>
-            <Link to="/about" className="text-blue-700 hover:text-black">Services</Link>
-            <Link to="/about" className="text-blue-700 hover:text-black">Doctors</Link>
-            <Link to="/about" className="text-blue-700 hover:text-black">Contact</Link>
+            <Link to="/About" className="text-blue-700 hover:text-black">About</Link>
+            <Link to="/Services" className="text-blue-700 hover:text-black">Services</Link>
+            <Link to="/Doctor" className="text-blue-700 hover:text-black">Doctors</Link>
+            <Link to="/Contact" className="text-blue-700 hover:text-black">Contact</Link>
 
             {user ? (
               <>

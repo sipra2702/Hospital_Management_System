@@ -7,7 +7,10 @@ import AdminLayout from './layouts/AdminLayout';
 
 // Pages
 import Home from './pages/public/Home';
+import Services from './pages/public/Services';
 import About from './pages/public/About';
+import Doctor from './pages/public/Doctor'
+import Contact from './pages/public/Contact'
 import Login from './pages/public/Login';
 import Register from './pages/public/Register';
 import Profile from './pages/user/Profile';
@@ -29,13 +32,21 @@ function App() {
       {/* Public Routes with Main Layout */}
       <Route path="/" element={<MainLayout />}>
         <Route index element={<Home />} />
-        <Route path="about" element={<About />} />
+
+        <Route path="services" element={<Services/>} />
+         <Route path="about" element={<About/>} />
+          <Route path="doctor" element={<Doctor/>} />
+          <Route path="contact" element={<Contact/>} />
+          
+
+        
         <Route path="/departments/cardiology" element={<Cardiology />} />
         <Route path="/departments/neurology" element={<Neurology />} />
         <Route path="/departments/orthopedics" element={<Orthopedics />} />
         <Route path="/departments/pediatrics" element={<Pediatrics />} />
         <Route path="/departments/emergency" element={<Emergency />} />
        
+
         
         {/* Only accessible if NOT logged in */}
         <Route 
