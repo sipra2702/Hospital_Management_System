@@ -45,16 +45,17 @@ const Dropdown = () => {
   <Link to="/departments/cardiology">Cardiology</Link>
 </li>
           <li className="px-4 py-2 hover:bg-blue-100 cursor-pointer">
-            Neurology
+            <Link to="/departments/neurology">Neurology</Link>
+
           </li>
           <li className="px-4 py-2 hover:bg-blue-100 cursor-pointer">
-            Orthopedics
+              <Link to="/departments/orthopedics">Orthopedics</Link>
           </li>
           <li className="px-4 py-2 hover:bg-blue-100 cursor-pointer">
-            Pediatrics
+            <Link to="/departments/pediatrics">Pediatrics</Link>
           </li>
           <li className="px-4 py-2 hover:bg-blue-100 cursor-pointer">
-            Emergency
+            <Link to="/departments/emergency">Emergency</Link>
           </li>
         </ul>
       )}

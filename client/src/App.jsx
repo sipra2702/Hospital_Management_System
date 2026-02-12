@@ -17,6 +17,10 @@ import AdminDashboard from './pages/admin/AdminDashboard';
 import ProtectedRoute from './route/ProtectedRoute';
 import PublicRoute from './route/PublicRoute';
 import Cardiology from "./pages/public/Cardiology";
+import Neurology from "./pages/public/Neurology";
+import Orthopedics from './pages/public/Orthopedics';
+import Pediatrics from "./pages/public/Pediatrics";
+import Emergency from "./pages/public/Emergency";
 
 
 function App() {
@@ -27,6 +31,10 @@ function App() {
         <Route index element={<Home />} />
         <Route path="about" element={<About />} />
         <Route path="/departments/cardiology" element={<Cardiology />} />
+        <Route path="/departments/neurology" element={<Neurology />} />
+        <Route path="/departments/orthopedics" element={<Orthopedics />} />
+        <Route path="/departments/pediatrics" element={<Pediatrics />} />
+        <Route path="/departments/emergency" element={<Emergency />} />
        
         
         {/* Only accessible if NOT logged in */}

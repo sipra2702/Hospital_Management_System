@@ -1,5 +1,6 @@
+import React from "react";
+import { Link } from "react-router-dom";
 
-import CardiologyImg from "../../assets/Cardiology.jpg";
 const Cardiology = () => {
   return (
     <div className="bg-gray-50 min-h-screen">
@@ -12,89 +13,47 @@ const Cardiology = () => {
       </div>
 
       {/* Content Section */}
-      <div className="max-w-7xl mx-auto px-6 py-12">
-        {/* Image */}
-        <div className="flex justify-center mb-10">
-          <img
-            src="https://www.lummi.ai/photo/healthcare-professional-in-clinical-setting-ncgfz"
-            alt="Cardiology Department"
-            className="w-full max-w-4xl rounded-xl shadow-lg object-cover"
-          />
-          <p className="text-center text-green-600">
-  Image loaded successfully
-</p>
-
-        </div>
-
+      <div className="max-w-6xl mx-auto px-6 py-12">
+        
         {/* Description */}
-        <div className="text-center mb-12">
+        <div className="text-center mb-10">
           <h2 className="text-2xl font-semibold text-blue-700 mb-4">
             Comprehensive Heart Care
           </h2>
-          <p className="text-gray-600 leading-relaxed max-w-3xl mx-auto">
-            Our Cardiology Department provides complete care for heart-related
-            conditions using modern technology and evidence-based practices.
-            From diagnosis to treatment and rehabilitation, our experienced
-            cardiologists are dedicated to your heart health.
+          <p className="text-gray-600 max-w-3xl mx-auto">
+            Our cardiology department provides diagnosis, treatment,
+            and preventive care for heart-related conditions including
+            hypertension, coronary artery disease, heart failure,
+            and arrhythmias using modern medical technology.
           </p>
         </div>
 
-        {/* Services */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          <div className="bg-white p-6 rounded-lg shadow hover:shadow-lg transition">
-            <h3 className="text-xl font-semibold text-blue-600 mb-2">
-              Heart Checkups
-            </h3>
-            <p className="text-gray-600">
-              Regular heart health screenings and preventive cardiology services.
-            </p>
+        {/* Services Grid */}
+        <div className="grid md:grid-cols-2 gap-6 mb-12">
+          <div className="bg-white p-6 rounded-lg shadow">
+            ECG & Echocardiography
           </div>
-
-          <div className="bg-white p-6 rounded-lg shadow hover:shadow-lg transition">
-            <h3 className="text-xl font-semibold text-blue-600 mb-2">
-              ECG & Echocardiography
-            </h3>
-            <p className="text-gray-600">
-              Accurate diagnostic tests for early detection of heart diseases.
-            </p>
+          <div className="bg-white p-6 rounded-lg shadow">
+            Heart Health Checkups
           </div>
-
-          <div className="bg-white p-6 rounded-lg shadow hover:shadow-lg transition">
-            <h3 className="text-xl font-semibold text-blue-600 mb-2">
-              Cardiac Surgery Support
-            </h3>
-            <p className="text-gray-600">
-              Pre- and post-operative care with expert cardiac surgeons.
-            </p>
+          <div className="bg-white p-6 rounded-lg shadow">
+            Cardiac Rehabilitation
           </div>
-
-          <div className="bg-white p-6 rounded-lg shadow hover:shadow-lg transition">
-            <h3 className="text-xl font-semibold text-blue-600 mb-2">
-              Emergency Cardiac Care
-            </h3>
-            <p className="text-gray-600">
-              24/7 emergency response for heart attacks and critical conditions.
-            </p>
-          </div>
-
-          <div className="bg-white p-6 rounded-lg shadow hover:shadow-lg transition">
-            <h3 className="text-xl font-semibold text-blue-600 mb-2">
-              Hypertension Management
-            </h3>
-            <p className="text-gray-600">
-              Personalized treatment plans for blood pressure control.
-            </p>
-          </div>
-
-          <div className="bg-white p-6 rounded-lg shadow hover:shadow-lg transition">
-            <h3 className="text-xl font-semibold text-blue-600 mb-2">
-              Lifestyle Counseling
-            </h3>
-            <p className="text-gray-600">
-              Diet, exercise, and lifestyle guidance for a healthy heart.
-            </p>
+          <div className="bg-white p-6 rounded-lg shadow">
+            Emergency Cardiac Care
           </div>
         </div>
+
+        {/* Appointment Button */}
+        <div className="text-center">
+          <Link
+            to="/appointment"
+            className="bg-blue-600 text-white px-6 py-3 rounded-lg hover:bg-blue-700 transition"
+          >
+            Book an Appointment
+          </Link>
+        </div>
+
       </div>
     </div>
   );
