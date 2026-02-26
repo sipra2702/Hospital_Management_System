@@ -24,6 +24,10 @@ import Neurology from "./pages/public/Neurology";
 import Orthopedics from './pages/public/Orthopedics';
 import Pediatrics from "./pages/public/Pediatrics";
 import Emergency from "./pages/public/Emergency";
+import AdminDoctor from './pages/admin/AdminDoctor';
+import AdminAppointment from './pages/admin/AdminAppointment';
+import MyAppointment from './pages/public/MyAppointment';
+import AdminPatient from './pages/admin/AdminPatient';
 
 
 function App() {
@@ -32,6 +36,7 @@ function App() {
       {/* Public Routes with Main Layout */}
       <Route path="/" element={<MainLayout />}>
         <Route index element={<Home />} />
+        <Route path='my-appointments' element={<MyAppointment/>}></Route>
 
         <Route path="services" element={<Services/>} />
          <Route path="about" element={<About/>} />
@@ -80,6 +85,9 @@ function App() {
       {/* Admin Routes with Admin Layout */}
       <Route path="/admin" element={<AdminLayout />}>
         <Route index element={<AdminDashboard />} />
+        <Route path='doctor' element={<AdminDoctor />} />
+        <Route path='patient' element={<AdminPatient />} />
+        <Route path='appointment' element={<AdminAppointment />} />
       </Route>
       
       {/* Fallback */}

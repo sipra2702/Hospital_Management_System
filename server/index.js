@@ -18,11 +18,18 @@ app.use(express.json());
 const authRoutes = require('./route/authRoutes');
 
 const contactRoutes = require('./route/contactRoutes');
+const  doctorRoutes= require("./route/doctorRoutes")
+const appointmentRoutes = require("./route/appointmentRoutes");
+const adminRoutes = require("./route/adminRoutes");
 
 
 // Mount Routes
 app.use('/api/auth', authRoutes);
 app.use('/api/contact', contactRoutes);
+app.use('/api/doctors', doctorRoutes);
+app.use("/api/appointments", appointmentRoutes);
+app.use("/api/users", adminRoutes);
+
 
 
 
