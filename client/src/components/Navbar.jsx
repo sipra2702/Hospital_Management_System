@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
 import Dropdown from "./Dropdown";
 import { useState, useRef, useEffect } from "react";
@@ -9,130 +9,85 @@ const Navbar = () => {
   const [openProfile, setOpenProfile] = useState(false);
   const profileRef = useRef();
 
-  // Close dropdown when clicking outside
   useEffect(() => {
     const handleClickOutside = (event) => {
-      if (
-        profileRef.current &&
-        !profileRef.current.contains(event.target)
-      ) {
+      if (profileRef.current && !profileRef.current.contains(event.target)) {
         setOpenProfile(false);
       }
     };
-
     document.addEventListener("mousedown", handleClickOutside);
-    return () =>
-      document.removeEventListener(
-        "mousedown",
-        handleClickOutside
-      );
+    return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
 
+  // ACTIVE + NORMAL STYLE using your color palette
+  const navLinkClass = ({ isActive }) =>
+    `px-3 py-2 rounded-lg transition ${
+      isActive
+        ? "bg-[#D49E8D] text-white font-semibold"  // accent for active
+        : "text-[#683B2B] hover:bg-[#B08401] hover:text-white"
+    }`;
+
   return (
-    <nav className="bg-white shadow-md relative z-50">
+    <nav className="shadow-md relative z-50" style={{ backgroundColor: "#FAF6F2" }}> {/* light background */}
       <div className="max-w-7xl mx-auto px-4">
         <div className="flex items-center justify-between h-16">
 
           {/* LEFT */}
           <div className="flex items-center space-x-6">
-            <Link
-              to="/"
-              className="text-xl font-bold text-black -ml-3"
-            >
+            <NavLink to="/" className="text-xl font-bold -ml-3 text-[#683B2B]">
               <i>MEDICAR</i>
-            </Link>
-
+            </NavLink>
             <Dropdown />
           </div>
 
           {/* RIGHT */}
           <div className="flex items-center space-x-4 text-base">
 
-            <Link to="/" className="text-blue-700 hover:text-black">
-              Home
-            </Link>
-            <Link to="/About" className="text-blue-700 hover:text-black">
-              About
-            </Link>
-            <Link to="/Services" className="text-blue-700 hover:text-black">
-              Services
-            </Link>
-            <Link to="/Doctor" className="text-blue-700 hover:text-black">
-              Doctors
-            </Link>
-            <Link to="/Contact" className="text-blue-700 hover:text-black">
-              Contact
-            </Link>
+            <NavLink to="/" className={navLinkClass}>Home</NavLink>
+            <NavLink to="/about" className={navLinkClass}>About</NavLink>
+            <NavLink to="/services" className={navLinkClass}>Services</NavLink>
+            <NavLink to="/doctor" className={navLinkClass}>Doctors</NavLink>
+            <NavLink to="/contact" className={navLinkClass}>Contact</NavLink>
 
             {user ? (
               <>
-                {/* ================= ADMIN ================= */}
                 {user.role === "admin" ? (
                   <>
-                    <span className="text-gray-500">
-                      Hi, {user.name}
-                    </span>
-
-                    <Link
-                      to="/admin"
-                      className="text-blue-600 font-semibold"
-                    >
-                      Admin Panel
-                    </Link>
-
-                    <button
-                      onClick={logout}
-                      className="bg-red-500 text-white px-3 py-1 rounded hover:bg-red-600"
-                    >
+                    <span style={{ color: "#DED1BD" }}>Hi, {user.name}</span>
+                    <NavLink to="/admin" className={navLinkClass}>Admin Panel</NavLink>
+                    <button onClick={logout} className="px-3 py-2 rounded-lg text-[#683B2B] hover:bg-[#B08401] hover:text-white transition">
                       Logout
                     </button>
                   </>
                 ) : (
-                  /* ================= USER PROFILE ================= */
-                  <div
-                    className="relative"
-                    ref={profileRef}
-                  >
+                  <div className="relative" ref={profileRef}>
                     <button
-                      onClick={() =>
-                        setOpenProfile(!openProfile)
-                      }
-                      className="flex items-center space-x-2 focus:outline-none"
+                      onClick={() => setOpenProfile(!openProfile)}
+                      className="flex items-center space-x-2 focus:outline-none text-[#683B2B]"
                     >
-                      <FaUserCircle className="text-2xl text-blue-600" />
-                      <span className="text-gray-700">
-                        {user.name}
-                      </span>
+                      <FaUserCircle className="text-2xl" />
+                      <span>{user.name}</span>
                     </button>
 
                     {openProfile && (
                       <div className="absolute right-0 mt-2 w-48 bg-white border rounded-lg shadow-lg py-2">
-                        <Link
+                        <NavLink
                           to="/profile"
-                          className="block px-4 py-2 hover:bg-gray-100"
-                          onClick={() =>
-                            setOpenProfile(false)
-                          }
+                          className="block px-4 py-2 text-[#683B2B] hover:bg-[#B08401] hover:text-white rounded-lg transition"
+                          onClick={() => setOpenProfile(false)}
                         >
                           My Profile
-                        </Link>
-
-                        <Link
+                        </NavLink>
+                        <NavLink
                           to="/my-appointments"
-                          className="block px-4 py-2 hover:bg-gray-100"
-                          onClick={() =>
-                            setOpenProfile(false)
-                          }
+                          className="block px-4 py-2 text-[#683B2B] hover:bg-[#B08401] hover:text-white rounded-lg transition"
+                          onClick={() => setOpenProfile(false)}
                         >
                           My Appointments
-                        </Link>
-
+                        </NavLink>
                         <button
-                          onClick={() => {
-                            logout();
-                            setOpenProfile(false);
-                          }}
-                          className="w-full text-left px-4 py-2 hover:bg-gray-100 text-red-500"
+                          onClick={() => { logout(); setOpenProfile(false); }}
+                          className="w-full text-left px-4 py-2 text-[#683B2B] hover:bg-[#B08401] hover:text-white rounded-lg transition"
                         >
                           Logout
                         </button>
@@ -143,18 +98,8 @@ const Navbar = () => {
               </>
             ) : (
               <>
-                <Link
-                  to="/login"
-                  className="text-gray-700 hover:text-blue-600"
-                >
-                  Login
-                </Link>
-                <Link
-                  to="/register"
-                  className="bg-blue-600 text-white px-3 py-1 rounded hover:bg-blue-700"
-                >
-                  Register
-                </Link>
+                <NavLink to="/login" className={navLinkClass}>Login</NavLink>
+                <NavLink to="/register" className="px-3 py-2 rounded-lg bg-[#B08401] text-white font-semibold hover:bg-[#D49E8D] transition">Register</NavLink>
               </>
             )}
           </div>

@@ -42,72 +42,87 @@ const DoctorModal = ({ type, doctor, onClose, refresh }) => {
   };
 
   return (
-    <div className="fixed inset-0 bg-black bg-opacity-40 flex justify-center items-center z-50">
-      <div className="bg-white rounded-xl w-[450px] p-6 shadow-2xl">
+    <div className="fixed inset-0 bg-black/40 backdrop-blur-sm flex justify-center items-center z-50">
+      
+      {/* MODAL BOX */}
+      <div className="bg-(--light) rounded-2xl w-112.5 p-6 shadow-2xl border border-(--neutral)">
 
-        <h2 className="text-xl font-bold mb-6 capitalize">
+        {/* TITLE */}
+        <h2 className="text-xl font-semibold mb-6 capitalize text-(--primary)">
           {type} Doctor
         </h2>
 
+        {/* VIEW MODE */}
         {type === "view" ? (
-          <div className="space-y-3">
+          <div className="space-y-3 text-(--primary)">
             <p><strong>Name:</strong> {doctor.name}</p>
             <p><strong>Specialization:</strong> {doctor.specialization}</p>
             <p><strong>Experience:</strong> {doctor.experience} years</p>
             <p><strong>Fees:</strong> ₹ {doctor.fees}</p>
           </div>
         ) : (
+          /* FORM MODE */
           <div className="space-y-4">
+
             <input
               name="name"
               placeholder="Doctor Name"
               value={formData.name}
               onChange={handleChange}
-              className="w-full border p-2 rounded"
+              className="w-full px-3 py-2 rounded-lg border border-(--neutral) bg-white text-(--primary) focus:outline-none focus:ring-2 focus:ring-(--secondary) transition"
             />
+
             <input
               name="specialization"
               placeholder="Specialization"
               value={formData.specialization}
               onChange={handleChange}
-              className="w-full border p-2 rounded"
+              className="w-full px-3 py-2 rounded-lg border border-(--neutral) bg-white text-(--primary) focus:outline-none focus:ring-2 focus:ring-(--secondary) transition"
             />
+
             <input
               name="experience"
               type="number"
               placeholder="Experience (years)"
               value={formData.experience}
               onChange={handleChange}
-              className="w-full border p-2 rounded"
+              className="w-full px-3 py-2 rounded-lg border border-(--neutral) bg-white text-(--primary) focus:outline-none focus:ring-2 focus:ring-(--secondary) transition"
             />
+
             <input
               name="fees"
               type="number"
               placeholder="Consultation Fees"
               value={formData.fees}
               onChange={handleChange}
-              className="w-full border p-2 rounded"
+              className="w-full px-3 py-2 rounded-lg border border-(--neutral) bg-white text-(--primary) focus:outline-none focus:ring-2 focus:ring-(--secondary) transition"
             />
+
           </div>
         )}
 
+        {/* BUTTONS */}
         <div className="flex justify-end gap-3 mt-6">
+
+          {/* CLOSE */}
           <button
             onClick={onClose}
-            className="px-4 py-2 border rounded"
+            className="px-4 py-2 rounded-full border border-(--neutral) text-(--primary) transition hover:bg-(--neutral)"
           >
             Close
           </button>
 
+          {/* SAVE */}
           {type !== "view" && (
             <button
               onClick={handleSubmit}
-              className="bg-blue-600 text-white px-4 py-2 rounded"
+              className="px-4 py-2 rounded-full bg-(--secondary) text-white transition hover:bg-(--accent) hover:shadow-lg hover:-translate-y-0.5"
             >
               Save
             </button>
           )}
         </div>
+
       </div>
     </div>
   );
