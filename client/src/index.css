@@ -1,1 +1,116 @@
 @import "tailwindcss";
+
+
+/* ===== COLORS ===== */
+:root {
+  --primary: #683B2B;
+  --secondary: #B08401;
+  --accent: #D49E8D;
+  --light: #FAF6F2;
+  --neutral: #DED1BD;
+}
+/* BACKGROUNDS */
+.bg-primary {
+  background-color: var(--primary);
+}
+
+.bg-secondary {
+  background-color: var(--secondary);
+}
+
+.bg-accent {
+  background-color: var(--accent);
+}
+
+.bg-light {
+  background-color: var(--light);
+}
+
+.bg-neutral {
+  background-color: var(--neutral);
+}
+
+/* TEXT COLORS */
+.text-primary {
+  color: var(--primary);
+}
+
+.text-secondary {
+  color: var(--secondary);
+}
+
+.text-accent {
+  color: var(--accent);
+}
+
+.text-neutral {
+  color: var(--neutral);
+}
+
+/* BORDER COLORS */
+.border-neutral {
+  border-color: var(--neutral);
+}
+/* ===== NAV LINK ===== */
+.nav-link {
+  color: var(--primary);
+  font-weight: 500;
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  padding: 8px 14px;
+  border-radius: 999px;
+
+  line-height: 1;
+
+  transition: all 0.25s ease-in-out;
+  text-shadow: 0px 1px 2px rgba(0,0,0,0.08);
+}
+
+.nav-link:hover {
+  color: white;
+  background-color: var(--secondary);
+  box-shadow: 0 6px 14px rgba(0,0,0,0.15);
+  transform: translateY(-1px);
+}
+
+/* ===== LOGOUT SPECIAL ===== */
+.logout {
+  color: var(--primary);
+  border: 1px solid var(--neutral);
+}
+
+.logout:hover {
+  background-color: var(--secondary);
+  color: white;
+}
+
+/* ===== BUTTON ===== */
+.nav-btn {
+  background-color: var(--secondary);
+  color: white;
+  padding: 8px 14px;
+  border-radius: 999px;
+  transition: 0.3s;
+}
+
+.nav-btn:hover {
+  background-color: var(--accent);
+}
+
+/* ===== DROPDOWN ===== */
+/* ===== DROPDOWN ITEM ===== */
+.dropdown-item {
+  color: var(--primary);
+  font-weight: 500;
+  transition: all 0.25s ease;
+}
+
+/* HOVER EFFECT */
+.dropdown-item:hover {
+  background-color: var(--secondary);
+  color: white;
+  transform: translateX(4px); /* smooth slide effect */
+}

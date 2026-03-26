@@ -1,12 +1,10 @@
 import { useState, useRef, useEffect } from "react";
 import { Link } from "react-router-dom";
 
-
 const Dropdown = () => {
   const [open, setOpen] = useState(false);
   const dropdownRef = useRef(null);
 
-  // Close when clicking outside OR scrolling
   useEffect(() => {
     const handleClickOutside = (event) => {
       if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
@@ -29,34 +27,50 @@ const Dropdown = () => {
 
   return (
     <div className="relative" ref={dropdownRef}>
-      {/* Button */}
+      
+      {/* BUTTON */}
       <button
         onClick={() => setOpen(!open)}
-        className="text-gray-700 hover:text-blue-600 flex items-center gap-1"
+        className="nav-link flex items-center gap-1"
       >
         Departments
         <span className="text-xs">▼</span>
       </button>
 
-      {/* Dropdown */}
+      {/* DROPDOWN */}
       {open && (
-        <ul className="absolute left-0 mt-2 w-48 bg-white border rounded-md shadow-lg z-50">
-          <li className="px-4 py-2 hover:bg-blue-100 cursor-pointer">
-  <Link to="/departments/cardiology">Cardiology</Link>
-</li>
-          <li className="px-4 py-2 hover:bg-blue-100 cursor-pointer">
-            <Link to="/departments/neurology">Neurology</Link>
+        <ul className="absolute left-0 mt-3 w-52 bg-(--light) border border-(--neutral) rounded-xl shadow-lg z-50 p-2">
 
+          <li>
+            <Link to="/departments/cardiology" className="dropdown-item block px-4 py-2 rounded-lg">
+              Cardiology
+            </Link>
           </li>
-          <li className="px-4 py-2 hover:bg-blue-100 cursor-pointer">
-              <Link to="/departments/orthopedics">Orthopedics</Link>
+
+          <li>
+            <Link to="/departments/neurology" className="dropdown-item block px-4 py-2 rounded-lg">
+              Neurology
+            </Link>
           </li>
-          <li className="px-4 py-2 hover:bg-blue-100 cursor-pointer">
-            <Link to="/departments/pediatrics">Pediatrics</Link>
+
+          <li>
+            <Link to="/departments/orthopedics" className="dropdown-item block px-4 py-2 rounded-lg">
+              Orthopedics
+            </Link>
           </li>
-          <li className="px-4 py-2 hover:bg-blue-100 cursor-pointer">
-            <Link to="/departments/emergency">Emergency</Link>
+
+          <li>
+            <Link to="/departments/pediatrics" className="dropdown-item block px-4 py-2 rounded-lg">
+              Pediatrics
+            </Link>
           </li>
+
+          <li>
+            <Link to="/departments/emergency" className="dropdown-item block px-4 py-2 rounded-lg">
+              Emergency
+            </Link>
+          </li>
+
         </ul>
       )}
     </div>
