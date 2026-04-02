@@ -10,7 +10,9 @@ connectDB();
 const app = express();
 const PORT = process.env.PORT || 5000;
 
-app.use(cors());
+app.use(cors({
+  origin: '*'  // we'll replace * with your Vercel URL after Step 6
+}))
 app.use(express.json());
 
 
