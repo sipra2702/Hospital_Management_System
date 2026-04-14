@@ -11,14 +11,10 @@ const Dropdown = () => {
         setOpen(false);
       }
     };
-
-    const handleScroll = () => {
-      setOpen(false);
-    };
+    const handleScroll = () => setOpen(false);
 
     document.addEventListener("mousedown", handleClickOutside);
     window.addEventListener("scroll", handleScroll);
-
     return () => {
       document.removeEventListener("mousedown", handleClickOutside);
       window.removeEventListener("scroll", handleScroll);
@@ -26,51 +22,81 @@ const Dropdown = () => {
   }, []);
 
   return (
-    <div className="relative" ref={dropdownRef}>
-      
-      {/* BUTTON */}
+    <div style={{ position: "relative" }} ref={dropdownRef}>
+
+      {/* BUTTON — uses exact same styles as nb-links a */}
       <button
         onClick={() => setOpen(!open)}
-        className="nav-link flex items-center gap-1"
+        style={{
+          fontSize: "0.92rem",
+          fontWeight: 800,
+          color: open ? "var(--nb-primary)" : "var(--nb-black)",
+          background: open ? "rgba(104,59,43,0.1)" : "transparent",
+          border: "none",
+          padding: "0.5rem 1rem",
+          borderRadius: "8px",
+          cursor: "pointer",
+          display: "flex",
+          alignItems: "center",
+          gap: "0.3rem",
+          fontFamily: "'Nunito', sans-serif",
+          letterSpacing: "0.01em",
+          transition: "all 0.2s",
+        }}
+        onMouseEnter={e => {
+          e.currentTarget.style.color = "var(--nb-primary)";
+          e.currentTarget.style.background = "rgba(104,59,43,0.07)";
+        }}
+        onMouseLeave={e => {
+          e.currentTarget.style.color = open ? "var(--nb-primary)" : "var(--nb-black)";
+          e.currentTarget.style.background = open ? "rgba(104,59,43,0.1)" : "transparent";
+        }}
       >
         Departments
-        <span className="text-xs">▼</span>
+        <span style={{
+          fontSize: "0.65rem",
+          color: "var(--nb-neutral)",
+          transition: "transform 0.2s",
+          transform: open ? "rotate(180deg)" : "rotate(0deg)",
+          display: "inline-block",
+        }}>▼</span>
       </button>
 
-      {/* DROPDOWN */}
+      {/* DROPDOWN PANEL */}
       {open && (
-        <ul className="absolute left-0 mt-3 w-52 bg-(--light) border border-(--neutral) rounded-xl shadow-lg z-50 p-2">
-
-          <li>
-            <Link to="/departments/cardiology" className="dropdown-item block px-4 py-2 rounded-lg">
-              Cardiology
-            </Link>
-          </li>
-
-          <li>
-            <Link to="/departments/neurology" className="dropdown-item block px-4 py-2 rounded-lg">
-              Neurology
-            </Link>
-          </li>
-
-          <li>
-            <Link to="/departments/orthopedics" className="dropdown-item block px-4 py-2 rounded-lg">
-              Orthopedics
-            </Link>
-          </li>
-
-          <li>
-            <Link to="/departments/pediatrics" className="dropdown-item block px-4 py-2 rounded-lg">
-              Pediatrics
-            </Link>
-          </li>
-
-          <li>
-            <Link to="/departments/emergency" className="dropdown-item block px-4 py-2 rounded-lg">
-              Emergency
-            </Link>
-          </li>
-
+        <ul style={{
+          position: "absolute",
+          top: "calc(100% + 8px)",
+          left: 0,
+          width: "200px",
+          background: "var(--nb-white)",
+          border: "1.5px solid var(--nb-neutral)",
+          borderRadius: "14px",
+          boxShadow: "0 16px 48px rgba(104,59,43,0.18)",
+          overflow: "hidden",
+          zIndex: 1000,
+          padding: "0.3rem",
+          margin: 0,
+          listStyle: "none",
+          animation: "nb-drop 0.18s ease",
+        }}>
+          {[
+            { label: "Cardiology",   to: "/departments/cardiology"   },
+            { label: "Neurology",    to: "/departments/neurology"    },
+            { label: "Orthopedics",  to: "/departments/orthopedics"  },
+            { label: "Pediatrics",   to: "/departments/pediatrics"   },
+            { label: "Emergency",    to: "/departments/emergency"    },
+          ].map(({ label, to }) => (
+            <li key={to}>
+              <Link
+                to={to}
+                onClick={() => setOpen(false)}
+                className="nb-dd-item"   /* reuses your existing dropdown-item style from Navbar.jsx */
+              >
+                {label}
+              </Link>
+            </li>
+          ))}
         </ul>
       )}
     </div>

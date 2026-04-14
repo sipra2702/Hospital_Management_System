@@ -25,21 +25,44 @@ const DoctorModal = ({ type, doctor, onClose, refresh }) => {
   };
 
   const handleSubmit = async () => {
-    try {
-      if (type === "create") {
-        await api.post("/doctors", formData);
-      }
-
-      if (type === "update") {
-        await api.put(`/doctors/${doctor._id}`, formData);
-      }
-
-      refresh();
-      onClose();
-    } catch (error) {
-      alert("Operation failed");
+  try {
+    // ✅ Step 1: Validation (check empty fields)
+    if (
+      !formData.name ||
+      !formData.specialization ||
+      !formData.experience ||
+      !formData.fees
+    ) {
+      alert("Please fill all fields");
+      return;
     }
-  };
+
+    // ✅ Step 2: Convert string → number (VERY IMPORTANT)
+    const payload = {
+      ...formData,
+      experience: Number(formData.experience),
+      fees: Number(formData.fees),
+    };
+
+    // ✅ Step 3: API calls
+    if (type === "create") {
+      await api.post("/doctors", payload);
+    }
+
+    if (type === "update") {
+      await api.put(`/doctors/${doctor._id}`, payload);
+    }
+
+    // ✅ Step 4: Refresh + Close modal
+    refresh();
+    onClose();
+
+  } catch (error) {
+    // ✅ Step 5: Show real error
+    console.log("ERROR:", error.response?.data || error.message);
+    alert(error.response?.data?.message || "Operation failed");
+  }
+}; 
 
   return (
     <div className="fixed inset-0 bg-black/40 backdrop-blur-sm flex justify-center items-center z-50">

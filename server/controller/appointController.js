@@ -2,7 +2,7 @@ const Appointment = require("../model/Appointment");
 
 exports.createAppointment = async (req, res) => {
     try {
-        const { doctor, date } = req.body;
+        const { doctor, date, reason } = req.body;
 
         // Prevent double booking (optional but recommended)
         const existing = await Appointment.findOne({
@@ -22,6 +22,7 @@ exports.createAppointment = async (req, res) => {
             user: req.user.id, // from protect middleware
             doctor,
             date,
+            reason,
         });
 
         res.status(201).json({

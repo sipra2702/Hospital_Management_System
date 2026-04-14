@@ -19,9 +19,7 @@ const DoctorPage = () => {
 
   const [booking, setBooking] = useState(false);
 
-  // ============================
-  // FETCH DOCTORS
-  // ============================
+  // ================= FETCH DOCTORS =================
   useEffect(() => {
     const fetchDoctors = async () => {
       try {
@@ -33,13 +31,10 @@ const DoctorPage = () => {
         setLoading(false);
       }
     };
-
     fetchDoctors();
   }, []);
 
-  // ============================
-  // FILTER DOCTORS
-  // ============================
+  // ================= FILTER =================
   const filteredDoctors = doctors.filter((doctor) => {
     const matchesSpecialty =
       selectedSpecialty === "All" ||
@@ -54,17 +49,12 @@ const DoctorPage = () => {
     return matchesSpecialty && matchesSearch;
   });
 
-  // ============================
-  // OPEN MODAL
-  // ============================
+  // ================= BOOK =================
   const handleBookAppointment = (doctor) => {
     setSelectedDoctor(doctor);
     setShowAppointmentModal(true);
   };
 
-  // ============================
-  // SUBMIT APPOINTMENT
-  // ============================
   const handleSubmitAppointment = async (e) => {
     e.preventDefault();
 
@@ -76,12 +66,10 @@ const DoctorPage = () => {
     try {
       setBooking(true);
 
-      // Combine Date + Time
       const selectedDateTime = new Date(
         `${appointmentData.date}T${appointmentData.time}`
       );
 
-      // Prevent past booking
       if (selectedDateTime < new Date()) {
         alert("Cannot book appointment in the past");
         setBooking(false);
@@ -95,192 +83,243 @@ const DoctorPage = () => {
 
       if (res.data.success) {
         alert("Appointment booked successfully!");
-
         setShowAppointmentModal(false);
         setSelectedDoctor(null);
-
-        setAppointmentData({
-          date: "",
-          time: "",
-        });
+        setAppointmentData({ date: "", time: "" });
       }
     } catch (error) {
-      alert(
-        error.response?.data?.message ||
-        "Failed to book appointment"
-      );
+      alert(error.response?.data?.message || "Failed to book appointment");
     } finally {
       setBooking(false);
     }
   };
 
-  // ============================
-  // LOADING UI
-  // ============================
+  // ================= LOADING =================
   if (loading) {
     return (
       <div className="min-h-screen flex justify-center items-center">
-        <p className="text-xl font-semibold">
-          Loading doctors...
-        </p>
+        <p className="text-xl font-semibold">Loading doctors...</p>
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen bg-gray-50">
-      {/* HERO SECTION */}
-      <div className="bg-gradient-to-r from-blue-600 to-teal-600 text-white py-12 text-center">
-        <h1 className="text-4xl font-bold mb-4">
-          Meet Our Expert Doctors
-        </h1>
-        <p className="text-lg">
-          Highly qualified medical professionals dedicated to your health
-        </p>
-      </div>
+    <>
+      {/* ===== STYLE (MATCH SERVICES PAGE) ===== */}
+      <style>{`
+        @import url('https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&display=swap');
 
-      <div className="container mx-auto px-6 py-10">
+        .doc-root {
+          font-family: 'Nunito', sans-serif;
+          background: #FAF6F2;
+          padding-top: 80px;
+        }
 
-        {/* SEARCH + FILTER */}
-        <div className="mb-8 flex flex-col md:flex-row gap-4">
-          <input
-            type="text"
-            placeholder="Search doctor..."
-            className="w-full px-4 py-3 border rounded-lg"
-            value={searchQuery}
-            onChange={(e) =>
-              setSearchQuery(e.target.value)
-            }
-          />
+        .doc-wrap {
+          max-width: 1200px;
+          margin: auto;
+          padding: 2rem;
+        }
 
-          <select
-            className="px-4 py-3 border rounded-lg"
-            value={selectedSpecialty}
-            onChange={(e) =>
-              setSelectedSpecialty(e.target.value)
-            }
-          >
-            <option value="All">All</option>
-            {[...new Set(doctors.map((d) => d.specialization))].map(
-              (spec) => (
-                <option key={spec} value={spec}>
-                  {spec}
-                </option>
-              )
-            )}
-          </select>
-        </div>
+        .doc-search {
+          display: flex;
+          gap: 1rem;
+          margin-bottom: 3rem;
+        }
 
-        {/* DOCTOR GRID */}
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {filteredDoctors.map((doctor) => (
-            <div
-              key={doctor._id}
-              className="bg-white rounded-xl shadow-lg overflow-hidden"
-            >
-              <div className="p-6">
-                <h3 className="text-xl font-bold">
-                  {doctor.name}
-                </h3>
+        .doc-input, .doc-select {
+          padding: 0.9rem 1rem;
+          border-radius: 12px;
+          border: 2px solid #DED1BD;
+          outline: none;
+          font-weight: 600;
+        }
 
-                <p className="text-blue-600 mb-2">
-                  {doctor.specialization}
-                </p>
+        .doc-input {
+          flex: 1;
+        }
 
-                <p className="text-gray-600 mb-2">
-                  Experience: {doctor.experience} years
-                </p>
+        .doc-input:focus,
+        .doc-select:focus {
+          border-color: #683B2B;
+        }
 
-                <p className="text-gray-600 mb-4">
-                  Fee: ₹{doctor.fees}
-                </p>
+        .doc-grid {
+          display: grid;
+          grid-template-columns: repeat(3, 1fr);
+          gap: 1.5rem;
+        }
 
-                <button
-                  onClick={() =>
-                    handleBookAppointment(doctor)
-                  }
-                  className="w-full bg-blue-600 text-white py-3 rounded-lg hover:bg-blue-700 transition"
-                >
-                  Book Appointment
-                </button>
-              </div>
+        .doc-card {
+          background: white;
+          border: 2px solid #DED1BD;
+          border-radius: 20px;
+          padding: 1.5rem;
+          transition: 0.3s;
+        }
+
+        .doc-card:hover {
+          border-color: #683B2B;
+          transform: translateY(-5px);
+          box-shadow: 0 12px 30px rgba(0,0,0,0.1);
+        }
+
+        .doc-title {
+          font-size: 1.2rem;
+          font-weight: 800;
+        }
+
+        .doc-spec {
+          color: #B08401;
+          font-weight: 700;
+          margin-bottom: 0.5rem;
+        }
+
+        .doc-btn {
+          width: 100%;
+          background: #683B2B;
+          color: white;
+          padding: 0.7rem;
+          border-radius: 10px;
+          margin-top: 1rem;
+          font-weight: 700;
+        }
+
+        .doc-btn:hover {
+          background: #4a2518;
+        }
+
+        .doc-empty {
+          text-align: center;
+          padding: 5rem 0;
+          color: #78716C;
+        }
+
+        @media (max-width: 1024px) {
+          .doc-grid { grid-template-columns: repeat(2,1fr); }
+        }
+
+        @media (max-width: 768px) {
+          .doc-grid { grid-template-columns: 1fr; }
+          .doc-search { flex-direction: column; }
+        }
+      `}</style>
+
+      <div className="doc-root">
+
+        {/* ===== HERO ===== */}
+        <section className="sv-hero">
+          <div className="sv-hero-inner">
+            <div className="sv-hero-badge">
+              <span className="sv-badge-dot" />Our Specialists
             </div>
-          ))}
+            <h1 className="sv-hero-h1">
+              Meet Our <span className="sv-hero-accent">Doctors</span>
+            </h1>
+            <p className="sv-hero-sub">
+              Experienced professionals dedicated to your health.
+            </p>
+          </div>
+        </section>
+
+        <div className="doc-wrap">
+
+          {/* SEARCH */}
+          <div className="doc-search">
+            <input
+              type="text"
+              placeholder="Search doctor..."
+              className="doc-input"
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+            />
+
+            <select
+              className="doc-select"
+              value={selectedSpecialty}
+              onChange={(e) => setSelectedSpecialty(e.target.value)}
+            >
+              <option value="All">All</option>
+              {[...new Set(doctors.map((d) => d.specialization))].map(
+                (spec) => (
+                  <option key={spec}>{spec}</option>
+                )
+              )}
+            </select>
+          </div>
+
+          {/* GRID */}
+          {filteredDoctors.length > 0 ? (
+            <div className="doc-grid">
+              {filteredDoctors.map((doctor) => (
+                <div key={doctor._id} className="doc-card">
+                  <h3 className="doc-title">{doctor.name}</h3>
+                  <p className="doc-spec">{doctor.specialization}</p>
+                  <p>Experience: {doctor.experience} yrs</p>
+                  <p>Fee: ₹{doctor.fees}</p>
+
+                  <button
+                    onClick={() => handleBookAppointment(doctor)}
+                    className="doc-btn"
+                  >
+                    Book Appointment
+                  </button>
+                </div>
+              ))}
+            </div>
+          ) : (
+            <div className="doc-empty">
+              <FaUserMd size={60} />
+              <h2 style={{ marginTop: "1rem", fontWeight: "700" }}>
+                No Doctors Found
+              </h2>
+              <p>Try adjusting your search or filter</p>
+            </div>
+          )}
         </div>
 
-        {/* EMPTY STATE */}
-        {filteredDoctors.length === 0 && (
-          <div className="text-center py-12">
-            <FaUserMd className="text-6xl text-gray-400 mx-auto mb-4" />
-            <h3 className="text-xl font-bold text-gray-600">
-              No Doctors Found
-            </h3>
+        {/* ===== MODAL ===== */}
+        {showAppointmentModal && selectedDoctor && (
+          <div className="fixed inset-0 bg-black bg-opacity-40 flex justify-center items-center z-50">
+            <div className="bg-white rounded-xl w-[400px] p-6">
+              <h3 className="text-lg font-bold mb-4">
+                Book with {selectedDoctor.name}
+              </h3>
+
+              <form onSubmit={handleSubmitAppointment} className="space-y-3">
+                <input
+                  type="date"
+                  className="w-full border p-2 rounded"
+                  value={appointmentData.date}
+                  onChange={(e) =>
+                    setAppointmentData({
+                      ...appointmentData,
+                      date: e.target.value,
+                    })
+                  }
+                />
+
+                <input
+                  type="time"
+                  className="w-full border p-2 rounded"
+                  value={appointmentData.time}
+                  onChange={(e) =>
+                    setAppointmentData({
+                      ...appointmentData,
+                      time: e.target.value,
+                    })
+                  }
+                />
+
+                <button className="w-full bg-blue-600 text-white py-2 rounded">
+                  {booking ? "Booking..." : "Confirm"}
+                </button>
+              </form>
+            </div>
           </div>
         )}
       </div>
-
-      {/* APPOINTMENT MODAL */}
-      {showAppointmentModal && selectedDoctor && (
-        <div className="fixed inset-0 bg-black bg-opacity-40 flex justify-center items-center z-50">
-          <div className="bg-white rounded-xl w-[450px] p-6 shadow-2xl">
-            <h3 className="text-xl font-bold mb-6">
-              Book Appointment with {selectedDoctor.name}
-            </h3>
-
-            <form
-              onSubmit={handleSubmitAppointment}
-              className="space-y-4"
-            >
-              <input
-                type="date"
-                required
-                className="w-full border p-2 rounded"
-                value={appointmentData.date}
-                onChange={(e) =>
-                  setAppointmentData({
-                    ...appointmentData,
-                    date: e.target.value,
-                  })
-                }
-              />
-
-              <input
-                type="time"
-                required
-                className="w-full border p-2 rounded"
-                value={appointmentData.time}
-                onChange={(e) =>
-                  setAppointmentData({
-                    ...appointmentData,
-                    time: e.target.value,
-                  })
-                }
-              />
-
-              <div className="flex gap-3">
-                <button
-                  type="submit"
-                  disabled={booking}
-                  className="flex-1 bg-blue-600 text-white py-2 rounded hover:bg-blue-700 transition"
-                >
-                  {booking ? "Booking..." : "Confirm"}
-                </button>
-
-                <button
-                  type="button"
-                  onClick={() =>
-                    setShowAppointmentModal(false)
-                  }
-                  className="flex-1 border py-2 rounded"
-                >
-                  Cancel
-                </button>
-              </div>
-            </form>
-          </div>
-        </div>
-      )}
-    </div>
+    </>
   );
 };
 

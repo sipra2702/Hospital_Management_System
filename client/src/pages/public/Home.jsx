@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 import { useAuth } from "../../context/AuthContext";
 import { useState, useEffect, useRef } from "react";
-
+import BookingModal from "../../components/BookingModal";
 /* ─── Animated Counter ───────────────────────────────────── */
 const useCounter = (target, duration = 2000, start = false) => {
   const [count, setCount] = useState(0);
@@ -53,6 +53,26 @@ const Stat = ({ number, suffix, label, icon }) => {
 const Home = () => {
   const { user } = useAuth();
   const [activeFeat, setActiveFeat] = useState(0);
+  const [selectedDoctor, setSelectedDoctor] = useState(null);
+const [bookingSuccess, setBookingSuccess] = useState(false);
+  const [doctors, setDoctors] = useState([]);
+
+useEffect(() => {
+  fetch("/api/doctors")
+    .then(res => res.json())
+    .then(data => {
+      // take only first 3 for homepage
+      setDoctors(data.slice(0, 3).map(doc => ({
+        name:     doc.name,
+        dept:     doc.specialization,
+        exp:      doc.experience ? `${doc.experience} yrs` : "N/A",
+        rating:   doc.rating    || "N/A",
+        patients: doc.patients  || "N/A",
+        initials: doc.name.split(" ").map(w => w[0]).join("").slice(0, 2).toUpperCase(),
+      })));
+    })
+    .catch(() => setDoctors([]));
+}, []);
 
   /* DATA */
   const features = [
@@ -79,11 +99,7 @@ const Home = () => {
     { name: "ENT",              icon: "👂",  docs: 6  },
   ];
 
-  const doctors = [
-    { name: "Dr. Rahul Sharma", dept: "Cardiologist", exp: "15 yrs", rating: 4.9, patients: "3.2K", initials: "RS" },
-    { name: "Dr. Anjali Verma",  dept: "Neurologist",  exp: "12 yrs", rating: 4.8, patients: "2.8K", initials: "AV" },
-    { name: "Dr. Amit Singh",   dept: "Orthopedic",   exp: "10 yrs", rating: 4.7, patients: "2.1K", initials: "AS" },
-  ];
+   
 
   const testimonials = [
     { name: "Priya M.",     role: "Patient",          text: "Booking an appointment was effortless. The system sent me reminders and I could see my lab reports online. Highly recommend!" },
@@ -653,7 +669,14 @@ const Home = () => {
                       <span className="hm-stars">★★★★★</span>
                       <span className="hm-rtxt">{doc.rating} / 5</span>
                     </div>
-                    <button className="hm-book-btn">Book Appointment</button>
+                    <button
+                      className="hm-book-btn"
+                     onClick={() => setSelectedDoctor(doc)}
+                     >
+  Book Appointment
+</button>
+
+                    
                   </div>
                 </div>
               ))}
@@ -755,6 +778,33 @@ const Home = () => {
             </div>
           </div>
         </footer>
+        {/* ── BOOKING MODAL ── */}
+{selectedDoctor && (
+  <BookingModal
+    doctor={selectedDoctor}
+    onClose={() => setSelectedDoctor(null)}
+    onSuccess={() => {
+      setSelectedDoctor(null);
+      setBookingSuccess(true);
+      setTimeout(() => setBookingSuccess(false), 4000);
+    }}
+  />
+)}
+
+{/* ── SUCCESS TOAST ── */}
+{bookingSuccess && (
+  <div style={{
+    position: "fixed", bottom: "2rem", right: "2rem", zIndex: 3000,
+    background: "#683B2B", color: "white",
+    padding: "1rem 1.5rem", borderRadius: "14px",
+    fontFamily: "'Nunito', sans-serif", fontWeight: 800, fontSize: "0.9rem",
+    boxShadow: "0 8px 32px rgba(104,59,43,0.35)",
+    display: "flex", alignItems: "center", gap: "0.6rem",
+    animation: "bm-rise 0.25s ease",
+  }}>
+    ✅ Appointment booked! Awaiting admin approval.
+  </div>
+)}
 
       </div>
     </>

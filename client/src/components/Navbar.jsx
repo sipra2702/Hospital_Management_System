@@ -34,6 +34,27 @@ const Navbar = () => {
     { label: "Contact",  to: "/contact"            },
   ];
 
+  /* ── shared style for nav-link-style anchors/buttons ── */
+  const navLinkStyle = {
+    fontSize: "0.92rem",
+    fontWeight: 800,
+    color: "var(--nb-black)",
+    textDecoration: "none",
+    padding: "0.5rem 1rem",
+    borderRadius: "8px",
+    transition: "all 0.2s",
+    letterSpacing: "0.01em",
+  };
+
+  const navLinkHoverOn  = (e) => {
+    e.currentTarget.style.color      = "var(--nb-primary)";
+    e.currentTarget.style.background = "rgba(104,59,43,0.07)";
+  };
+  const navLinkHoverOff = (e) => {
+    e.currentTarget.style.color      = "var(--nb-black)";
+    e.currentTarget.style.background = "transparent";
+  };
+
   return (
     <>
       <style>{`
@@ -144,20 +165,6 @@ const Navbar = () => {
           transform: translateY(-1px);
           box-shadow: 0 8px 22px rgba(104,59,43,0.38);
         }
-        .nb-btn-secondary {
-          background: var(--nb-secondary); color: var(--nb-white);
-          padding: 0.52rem 1.3rem; border-radius: 9px; font-weight: 800;
-          font-size: 0.86rem; text-decoration: none;
-          display: inline-flex; align-items: center; gap: 0.3rem;
-          border: none; cursor: pointer; transition: all 0.2s;
-          font-family: 'Nunito', sans-serif;
-          box-shadow: 0 4px 14px rgba(176,132,1,0.28);
-        }
-        .nb-btn-secondary:hover {
-          background: #9a7301;
-          transform: translateY(-1px);
-          box-shadow: 0 8px 20px rgba(176,132,1,0.35);
-        }
         .nb-btn-danger {
           background: transparent; border: 2px solid rgba(180,60,40,0.35);
           color: #B43C28; font-size: 0.86rem; font-weight: 800;
@@ -255,7 +262,6 @@ const Navbar = () => {
           .nb-hamburger { display: flex; }
           .nb-right .nb-btn-outline,
           .nb-right .nb-btn-primary,
-          .nb-right .nb-btn-secondary,
           .nb-right .nb-btn-danger { display: none; }
         }
       `}</style>
@@ -293,7 +299,18 @@ const Navbar = () => {
                 {user.role === "admin" ? (
                   <>
                     <span className="nb-admin-badge">Admin</span>
-                    <NavLink to="/admin" className="nb-btn-secondary">Admin Panel</NavLink>
+
+                    {/* ── Admin Panel — styled like a nav link ── */}
+                    <NavLink
+                      to="/admin"
+                      style={navLinkStyle}
+                      className={({ isActive }) => isActive ? "nb-active" : ""}
+                      onMouseEnter={navLinkHoverOn}
+                      onMouseLeave={navLinkHoverOff}
+                    >
+                      Admin Panel
+                    </NavLink>
+
                     <button onClick={logout} className="nb-btn-danger">Logout</button>
                   </>
                 ) : (
@@ -360,13 +377,20 @@ const Navbar = () => {
             </>
           ) : user.role === "admin" ? (
             <>
-              <NavLink to="/admin" className="nb-btn-secondary" onClick={() => setMobileOpen(false)}>Admin Panel</NavLink>
+              {/* ── Mobile Admin Panel — styled like a mobile nav link ── */}
+              <NavLink
+                to="/admin"
+                className={({ isActive }) => `nb-mobile-link ${isActive ? "nb-active" : ""}`}
+                onClick={() => setMobileOpen(false)}
+              >
+                Admin Panel
+              </NavLink>
               <button onClick={() => { logout(); setMobileOpen(false); }} className="nb-btn-danger">Logout</button>
             </>
           ) : (
             <>
-              <Link to="/dashboard"       className="nb-btn-primary"   onClick={() => setMobileOpen(false)}>Dashboard</Link>
-              <Link to="/my-appointments" className="nb-btn-outline"   onClick={() => setMobileOpen(false)}>Appointments</Link>
+              <Link to="/dashboard"       className="nb-btn-primary" onClick={() => setMobileOpen(false)}>Dashboard</Link>
+              <Link to="/my-appointments" className="nb-btn-outline" onClick={() => setMobileOpen(false)}>Appointments</Link>
               <button onClick={() => { logout(); setMobileOpen(false); }} className="nb-btn-danger">Logout</button>
             </>
           )}

@@ -28,6 +28,7 @@ import AdminDoctor from './pages/admin/AdminDoctor';
 import AdminAppointment from './pages/admin/AdminAppointment';
 import MyAppointment from './pages/public/MyAppointment';
 import AdminPatient from './pages/admin/AdminPatient';
+import UserDashboard from './pages/user/UserDashboard';
 
 
 function App() {
@@ -82,8 +83,24 @@ function App() {
         />
       </Route>
 
+      <Route 
+         path="dashboard" 
+          element={
+         <ProtectedRoute>
+        <UserDashboard />
+       </ProtectedRoute>
+  } 
+/>
+
       {/* Admin Routes with Admin Layout */}
-      <Route path="/admin" element={<AdminLayout />}>
+      <Route 
+  path="/admin" 
+  element={
+    <ProtectedRoute>
+      <AdminLayout />
+    </ProtectedRoute>
+  }
+>
         <Route index element={<AdminDashboard />} />
         <Route path='doctor' element={<AdminDoctor />} />
         <Route path='patient' element={<AdminPatient />} />

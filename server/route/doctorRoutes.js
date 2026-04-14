@@ -17,11 +17,9 @@ router.get("/:id", getSingleDoctor);
 
 
 router.post("/", protect, adminOnly, createDoctor);
-
 router.put("/:id", protect, adminOnly, updateDoctor);
+router.delete("/:id", protect, adminOnly, deleteDoctor);;
 
-router.delete("/:id", protect, adminOnly, deleteDoctor);
-
-router.patch("/:id/availability", protect, adminOnly, toggleAvailability);
+router.patch("/:id/availability",  toggleAvailability);
 
 module.exports = router;

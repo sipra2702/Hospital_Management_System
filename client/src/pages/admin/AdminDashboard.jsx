@@ -1,8 +1,7 @@
-iimport { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef } from "react";
 
 /* ───────── MOCK AUTH ───────── */
-const useAuth = () => ({ user: { name: "Debasis Rout" } });
-
+import { useAuth } from "../../context/AuthContext";
 /* ───────── COLORS ───────── */
 const C = {
   bg: "#FAF6F2",
